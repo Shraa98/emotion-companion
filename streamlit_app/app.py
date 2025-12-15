@@ -336,15 +336,26 @@ with st.sidebar:
     st.markdown("### 👤 Account")
     st.success(f"Logged in as:\n{st.session_state.user_email}")
     if st.button("🚪 Log Out", use_container_width=True):
+        # Clear session state
         st.session_state.user_id = str(uuid4())
         st.session_state.user_email = None
         st.session_state.auth_token = None
         st.session_state.analysis_result = None
         st.session_state.show_results = False
+        
+        # Sign out from Supabase
         try:
             supabase.auth.sign_out()
         except:
             pass
+        
+        # Clear sessionStorage and redirect to auth page
+        st.markdown("""
+            <script>
+            sessionStorage.clear();
+            window.location.href = 'http://localhost:8000/auth';
+            </script>
+        """, unsafe_allow_html=True)
         st.rerun()
     st.markdown("---")
 
