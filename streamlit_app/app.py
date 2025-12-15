@@ -266,158 +266,273 @@ if "show_results" not in st.session_state:
     st.session_state.show_results = False
 
 # ============================================================================
-# Authentication Gate (Main Page)
+# Authentication Gate (Main Page) - Figma Template Design
 # ============================================================================
 
 # If user is not authenticated, show login/signup page
 if not st.session_state.auth_token:
-    # Custom CSS for auth page
+    # Hide Streamlit default elements for auth page
     st.markdown("""
         <style>
-        /* Auth Page Specific Styles */
-        .auth-container {
-            display: flex;
-            min-height: 100vh;
-            align-items: center;
-            justify-content: center;
+        /* Hide Streamlit branding and padding for auth page */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        .block-container {
+            padding: 0 !important;
+            max-width: 100% !important;
         }
         
-        .auth-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 3rem 2.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            max-width: 450px;
+        /* Full-screen split layout */
+        .auth-wrapper {
+            display: flex;
+            min-height: 100vh;
             width: 100%;
         }
         
-        .auth-header {
+        /* Left Panel - Branding */
+        .auth-left {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-left::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: drift 20s linear infinite;
+        }
+        
+        @keyframes drift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(50px, 50px); }
+        }
+        
+        .brand-content {
+            position: relative;
+            z-index: 1;
             text-align: center;
-            margin-bottom: 2.5rem;
+            color: white;
         }
         
-        .auth-title {
+        .brand-logo {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .brand-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 2.2rem;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .brand-tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+        
+        /* Right Panel - Auth Form */
+        .auth-right {
+            flex: 1;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+        }
+        
+        /* Auth Card */
+        .auth-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            max-width: 420px;
+            width: 100%;
+        }
+        
+        .auth-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: #FFFFFF;
+            color: #1a1a2e;
             margin-bottom: 0.5rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
         }
         
-        .auth-subtitle {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 400;
+        .auth-card-subtitle {
+            font-size: 0.95rem;
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 2rem;
         }
         
-        /* Input Field Overrides for Auth */
+        /* Input Styling */
         .stTextInput > div > div > input {
-            background: rgba(255, 255, 255, 0.95) !important;
-            border: 2px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 12px !important;
-            padding: 1rem 1.2rem !important;
-            font-size: 1rem !important;
+            background: #f8f9fa !important;
+            border: 2px solid #e9ecef !important;
+            border-radius: 10px !important;
+            padding: 0.9rem 1rem !important;
+            font-size: 0.95rem !important;
             color: #1a1a2e !important;
-            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
         }
         
         .stTextInput > div > div > input:focus {
-            border-color: #FF6500 !important;
-            box-shadow: 0 0 0 3px rgba(255, 101, 0, 0.1) !important;
-            background: #FFFFFF !important;
+            background: white !important;
+            border-color: #667eea !important;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
         }
         
         .stTextInput > label {
-            color: #FFFFFF !important;
+            color: #1a1a2e !important;
             font-weight: 600 !important;
-            font-size: 0.95rem !important;
+            font-size: 0.9rem !important;
             margin-bottom: 0.5rem !important;
         }
         
-        /* Radio Button Styling */
+        /* Radio Buttons */
         .stRadio > div {
             justify-content: center;
-            gap: 1rem;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
         }
         
         .stRadio > div > label {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.7rem 2rem;
-            border-radius: 50px;
-            color: rgba(255, 255, 255, 0.7);
-            border: 2px solid transparent;
+            background: #f8f9fa;
+            padding: 0.6rem 1.8rem;
+            border-radius: 10px;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
             transition: all 0.3s ease;
             font-weight: 600;
+            cursor: pointer;
         }
         
-        .stRadio > div > label:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #FFFFFF;
+        .stRadio > div > label:has(input:checked) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
         }
         
-        .stRadio > div > label[data-baseweb="radio"] > div:first-child {
+        .stRadio > div > label > div:first-child {
             display: none;
         }
         
-        /* Auth Button */
-        .auth-btn {
+        /* Button Styling */
+        .stButton > button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 10px !important;
+            padding: 0.9rem 2rem !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) !important;
+        }
+        
+        .stButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+        }
+        
+        /* Helper Text */
+        .helper-text {
+            text-align: center;
             margin-top: 1.5rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .helper-text a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
         }
         </style>
     """, unsafe_allow_html=True)
     
-    # Center the auth form
-    col1, col2, col3 = st.columns([1, 1.2, 1])
+    # Create two-column layout
+    left_col, right_col = st.columns([1, 1], gap="none")
     
-    with col2:
-        # Header
+    with left_col:
         st.markdown("""
-            <div class="auth-header">
-                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🌟</div>
-                <h1 class="auth-title">Welcome to Emotion Companion</h1>
-                <p class="auth-subtitle">Your AI-powered emotional wellness companion</p>
+            <div class="auth-left">
+                <div class="brand-content">
+                    <div class="brand-logo">🌟</div>
+                    <h1 class="brand-title">Emotion<br/>Companion</h1>
+                    <p class="brand-tagline">Start your journey to<br/>emotional wellness</p>
+                </div>
             </div>
         """, unsafe_allow_html=True)
-        
-        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+    
+    with right_col:
+        st.markdown('<div class="auth-right">', unsafe_allow_html=True)
         
         # Auth mode selector
         auth_mode = st.radio(
-            "auth_mode",
+            "mode",
             ["Login", "Sign Up"],
             horizontal=True,
             label_visibility="collapsed",
-            key="auth_mode_selector"
+            key="auth_mode_select"
         )
         
-        st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
+        # Card title based on mode
+        if auth_mode == "Login":
+            st.markdown("""
+                <div class="auth-card-title">Welcome Back!</div>
+                <div class="auth-card-subtitle">Login to your account</div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown("""
+                <div class="auth-card-title">Create Account</div>
+                <div class="auth-card-subtitle">Start your wellness journey</div>
+            """, unsafe_allow_html=True)
         
-        # Auth form
+        # Form fields
         email = st.text_input(
-            "📧 Email Address",
+            "Email",
             placeholder="your@email.com",
-            key="auth_email"
+            key="email_input"
         )
         
         password = st.text_input(
-            "🔒 Password",
+            "Password",
             type="password",
             placeholder="Enter your password",
-            key="auth_password"
+            key="password_input"
         )
         
-        st.markdown("<div class='auth-btn'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
         
+        # Submit button
         if auth_mode == "Login":
-            if st.button("🚀 Log In", type="primary", use_container_width=True, key="login_btn"):
+            if st.button("🚀 Log In", type="primary", use_container_width=True, key="login_submit"):
                 if not email or not password:
                     st.error("⚠️ Please enter both email and password")
                 else:
                     try:
-                        with st.spinner("🔐 Authenticating..."):
+                        with st.spinner("Authenticating..."):
                             response = supabase.auth.sign_in_with_password({"email": email, "password": password})
                             if response and response.user:
                                 st.session_state.auth_token = response.session.access_token
@@ -428,17 +543,17 @@ if not st.session_state.auth_token:
                     except Exception as e:
                         st.error(f"❌ Login failed: {str(e)}")
             
-            st.markdown("<div style='text-align: center; margin-top: 1.5rem;'><p style='color: rgba(255,255,255,0.6); font-size: 0.9rem;'>Don't have an account? Switch to Sign Up above</p></div>", unsafe_allow_html=True)
-            
+            st.markdown('<div class="helper-text">Don\'t have an account? <a href="#" onclick="return false;">Sign Up</a></div>', unsafe_allow_html=True)
+        
         else:  # Sign Up
-            if st.button("✨ Create Account", type="primary", use_container_width=True, key="signup_btn"):
+            if st.button("✨ Create Account", type="primary", use_container_width=True, key="signup_submit"):
                 if not email or not password:
                     st.error("⚠️ Please enter both email and password")
                 elif len(password) < 6:
                     st.error("⚠️ Password must be at least 6 characters")
                 else:
                     try:
-                        with st.spinner("🎨 Creating your account..."):
+                        with st.spinner("Creating your account..."):
                             response = supabase.auth.sign_up({"email": email, "password": password})
                             if response and response.user:
                                 st.success("✅ Account created! Please log in.")
@@ -446,18 +561,11 @@ if not st.session_state.auth_token:
                     except Exception as e:
                         st.error(f"❌ Signup failed: {str(e)}")
             
-            st.markdown("<div style='text-align: center; margin-top: 1.5rem;'><p style='color: rgba(255,255,255,0.6); font-size: 0.9rem;'>Already have an account? Switch to Login above</p></div>", unsafe_allow_html=True)
+            st.markdown('<div class="helper-text">Already have an account? <a href="#" onclick="return false;">Log In</a></div>', unsafe_allow_html=True)
+        
+        st.markdown('</div>', unsafe_allow_html=True)
     
-    # Footer
-    st.markdown("""
-        <div style='text-align: center; margin-top: 3rem; padding: 2rem;'>
-            <p style='color: rgba(255, 255, 255, 0.4); font-size: 0.85rem;'>
-                Made with ❤️ for mental health awareness
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    # Stop execution here - don't show the main app
+    # Stop execution - don't show main app
     st.stop()
 
 # ============================================================================
