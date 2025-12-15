@@ -352,11 +352,20 @@ if not st.session_state.auth_token:
         /* Right Panel - Auth Form */
         .auth-right {
             flex: 1;
-            background: #f8f9fa;
+            background: #ffffff !important;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 3rem;
+        }
+        
+        /* Override Streamlit's dark background */
+        [data-testid="stAppViewContainer"] {
+            background: transparent !important;
+        }
+        
+        [data-testid="stHeader"] {
+            background: transparent !important;
         }
         
         /* Auth Card */
