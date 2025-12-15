@@ -1,0 +1,112 @@
+{
+  "happy": {
+    "emoji": "😊",
+    "color": "#FFD700",
+    "suggestions": [
+      "Celebrate this positive moment and share your joy with someone!",
+      "Write down what made you happy to remember it later",
+      "Practice gratitude by listing three things you're thankful for",
+      "Use this positive energy to tackle a challenging task",
+      "Share your happiness with others to spread positivity"
+    ]
+  },
+  "sad": {
+    "emoji": "😢",
+    "color": "#4682B4",
+    "suggestions": [
+      "It's okay to feel sad. Be gentle and compassionate with yourself",
+      "Try the 4-7-8 breathing technique: inhale for 4, hold for 7, exhale for 8",
+      "Reach out to a friend or loved one for support",
+      "Engage in a comforting activity like listening to music or taking a warm bath",
+      "Remember that this feeling is temporary and will pass"
+    ]
+  },
+  "angry": {
+    "emoji": "😠",
+    "color": "#DC143C",
+    "suggestions": [
+      "Take 10 deep breaths before reacting to calm your nervous system",
+      "Go for a walk or do some physical exercise to release tension",
+      "Write down what's making you angry without filtering",
+      "Practice the STOP technique: Stop, Take a breath, Observe, Proceed mindfully",
+      "Channel your energy into a productive activity"
+    ]
+  },
+  "anxious": {
+    "emoji": "😰",
+    "color": "#9370DB",
+    "suggestions": [
+      "Practice the 5-4-3-2-1 grounding technique: 5 things you see, 4 you touch, 3 you hear, 2 you smell, 1 you taste",
+      "Focus on what you can control and let go of what you can't",
+      "Try progressive muscle relaxation: tense and release each muscle group",
+      "Challenge anxious thoughts: Are they facts or fears?",
+      "Practice mindful breathing for 5 minutes"
+    ]
+  },
+  "fear": {
+    "emoji": "😨",
+    "color": "#8B4513",
+    "suggestions": [
+      "Remind yourself that you are safe in this moment",
+      "Talk to someone you trust about what's frightening you",
+      "Practice deep belly breathing to activate your parasympathetic nervous system",
+      "Write down your fears to externalize them",
+      "Use positive affirmations: 'I am safe. I am strong. I can handle this.'"
+    ]
+  },
+  "calm": {
+    "emoji": "😌",
+    "color": "#98FB98",
+    "suggestions": [
+      "Enjoy and savor this peaceful moment",
+      "Practice gratitude for this sense of calm",
+      "Maintain your current routine and self-care practices",
+      "Use this time for reflection or creative activities",
+      "Share your calm energy with others"
+    ]
+  },
+  "surprise": {
+    "emoji": "😲",
+    "color": "#FFA500",
+    "suggestions": [
+      "Take a moment to process this unexpected event",
+      "Write about how you feel to organize your thoughts",
+      "Talk it through with someone to gain perspective",
+      "Allow yourself time to adjust to the new information",
+      "Focus on what you can control in this situation"
+    ]
+  },
+  "neutral": {
+    "emoji": "😐",
+    "color": "#A9A9A9",
+    "suggestions": [
+      "Check in with yourself regularly throughout the day",
+      "Try journaling about your day to explore your feelings",
+      "Practice mindfulness to become more aware of your emotions",
+      "Engage in an activity that brings you joy",
+      "Set a small, achievable goal for today"
+    ]
+  },
+  "joy": {
+    "emoji": "😄",
+    "color": "#FFD700",
+    "suggestions": [
+      "Amplify your joy by sharing it with others!",
+      "Capture this moment in a photo or journal entry",
+      "Express gratitude for what's bringing you joy",
+      "Use this positive energy to help someone else",
+      "Remember this feeling for difficult times"
+    ]
+  },
+  "disgust": {
+    "emoji": "🤢",
+    "color": "#556B2F",
+    "suggestions": [
+      "Acknowledge your boundaries and what doesn't align with your values",
+      "Remove yourself from the situation if possible",
+      "Practice self-compassion and validate your feelings",
+      "Write about what triggered this feeling",
+      "Focus on something pleasant to reset your mood"
+    ]
+  }
+}

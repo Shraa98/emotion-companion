@@ -1,0 +1,11 @@
+user_id,text,mood_score,sentiment,emotion,created_at
+550e8400-e29b-41d4-a716-446655440000,"I had an amazing day today! Everything went perfectly at work and I feel so accomplished.",9,0.85,happy,2024-01-15 18:30:00
+550e8400-e29b-41d4-a716-446655440000,"Feeling a bit anxious about tomorrow's presentation. I've prepared well but still nervous.",4,-0.3,anxious,2024-01-16 22:00:00
+550e8400-e29b-41d4-a716-446655440000,"Today was okay. Nothing special happened. Just a regular day at the office.",5,0.1,neutral,2024-01-17 19:00:00
+550e8400-e29b-41d4-a716-446655440000,"I'm so frustrated with this project. Nothing is going right and I feel overwhelmed.",3,-0.6,angry,2024-01-18 20:30:00
+550e8400-e29b-41d4-a716-446655440000,"Had a wonderful conversation with an old friend today. It reminded me of good times.",8,0.7,happy,2024-01-19 21:00:00
+550e8400-e29b-41d4-a716-446655440000,"Feeling down today. Missing my family and feeling a bit lonely.",3,-0.5,sad,2024-01-20 18:00:00
+550e8400-e29b-41d4-a716-446655440000,"Accomplished all my goals for the week! Feeling proud and motivated.",9,0.9,joy,2024-01-21 17:00:00
+550e8400-e29b-41d4-a716-446655440000,"Worried about my health. Need to schedule a doctor's appointment soon.",4,-0.4,anxious,2024-01-22 20:00:00
+550e8400-e29b-41d4-a716-446655440000,"Beautiful weather today. Went for a long walk and felt peaceful and calm.",7,0.6,calm,2024-01-23 16:00:00
+550e8400-e29b-41d4-a716-446655440000,"Received unexpected good news! I got the promotion I was hoping for!",10,0.95,joy,2024-01-24 14:00:00
