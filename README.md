@@ -49,7 +49,31 @@
 
 ---
 
-## 🚀 Quick Start
+## � Application Workflow
+
+```mermaid
+graph TD
+    A[User Starts App] -->|Login/Signup| B{Auth System}
+    B -->|Success| C[Dashboard Home]
+    C -->|Text/Voice Input| D[Journal Entry]
+    
+    subgraph "AI Analysis Pipeline"
+    D --> E{NLP Engine}
+    E --> F[Sentiment Analysis]
+    E --> G[Emotion Detection]
+    E --> H[Theme Extraction]
+    F & G & H --> I[Aggregate Insights]
+    end
+    
+    I -->|JSON Response| J[Results Display]
+    J --> K[Personalized Suggestions]
+    J --> L[Mood Dashboard Update]
+    L --> M[Historical Trends]
+```
+
+---
+
+## �🚀 Quick Start
 
 ### Prerequisites
 *   Python 3.10+
