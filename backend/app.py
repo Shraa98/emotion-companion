@@ -5,9 +5,12 @@ Provides REST API endpoints for journal entries, audio uploads, and emotional an
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from typing import Optional, List
 from uuid import UUID
 import logging
+from pathlib import Path
 
 from backend.config import settings
 from backend.models import (
@@ -51,6 +54,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount static files for auth page
+auth_dir = Path(__file__).parent.parent / "auth"
+app.mount("/auth/static", StaticFiles(directory=str(auth_dir)), name="auth_static")
+
+
+# ============================================================================
+# Authentication Page Route
+# ============================================================================
+
+@app.get("/auth", response_class=HTMLResponse)
+async def serve_auth_page():
+    """
+    Serve the standalone HTML authentication page.
+    """
+    auth_html_path = Path(__file__).parent.parent / "auth" / "index.html"
+    with open(auth_html_path, "r", encoding="utf-8") as f:
+        return f.read()
+
+@app.get("/auth/{filename}")
+async def serve_auth_files(filename: str):
+    """
+    Serve CSS/JS files for auth page.
+    """
+    auth_file_path = Path(__file__).parent.parent / "auth" / filename
+    if auth_file_path.exists():
+        return FileResponse(auth_file_path)
+    raise HTTPException(status_code=404, detail="File not found")
 
 # ============================================================================
 # Health Check Endpoint
