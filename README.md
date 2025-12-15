@@ -53,22 +53,26 @@
 
 ```mermaid
 graph TD
-    A[User Starts App] -->|Login/Signup| B{Auth System}
-    B -->|Success| C[Dashboard Home]
-    C -->|Text/Voice Input| D[Journal Entry]
+    A[User Opens App] --> B[Emotion Companion Home]
+    B -->|Optional| C[Sidebar: Login/Signup]
+    B --> D[Write Journal Entry]
+    D -->|Text or Voice| E[Submit for Analysis]
     
     subgraph "AI Analysis Pipeline"
-    D --> E{NLP Engine}
-    E --> F[Sentiment Analysis]
-    E --> G[Emotion Detection]
-    E --> H[Theme Extraction]
-    F & G & H --> I[Aggregate Insights]
+    E --> F{NLP Engine}
+    F --> G[Sentiment Analysis]
+    F --> H[Emotion Detection]
+    F --> I[Theme Extraction]
+    G & H & I --> J[Aggregate Insights]
     end
     
-    I -->|JSON Response| J[Results Display]
-    J --> K[Personalized Suggestions]
-    J --> L[Mood Dashboard Update]
-    L --> M[Historical Trends]
+    J -->|JSON Response| K[Display Results]
+    K --> L[Mood Score & Emotion]
+    K --> M[Personalized Suggestions]
+    K --> N[Wellness Toolkit]
+    
+    C -->|Authenticated| O[Save to User History]
+    K --> O
 ```
 
 ---
