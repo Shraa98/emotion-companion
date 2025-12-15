@@ -271,46 +271,153 @@ if "show_results" not in st.session_state:
 
 # If user is not authenticated, show login/signup page
 if not st.session_state.auth_token:
+    # Custom CSS for auth page
+    st.markdown("""
+        <style>
+        /* Auth Page Specific Styles */
+        .auth-container {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .auth-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 450px;
+            width: 100%;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .auth-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .auth-subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
+        }
+        
+        /* Input Field Overrides for Auth */
+        .stTextInput > div > div > input {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 2px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 12px !important;
+            padding: 1rem 1.2rem !important;
+            font-size: 1rem !important;
+            color: #1a1a2e !important;
+            font-weight: 500 !important;
+        }
+        
+        .stTextInput > div > div > input:focus {
+            border-color: #FF6500 !important;
+            box-shadow: 0 0 0 3px rgba(255, 101, 0, 0.1) !important;
+            background: #FFFFFF !important;
+        }
+        
+        .stTextInput > label {
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+            font-size: 0.95rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        /* Radio Button Styling */
+        .stRadio > div {
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .stRadio > div > label {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.7);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .stRadio > div > label:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+        }
+        
+        .stRadio > div > label[data-baseweb="radio"] > div:first-child {
+            display: none;
+        }
+        
+        /* Auth Button */
+        .auth-btn {
+            margin-top: 1.5rem;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
     # Center the auth form
-    col1, col2, col3 = st.columns([1, 2, 1])
+    col1, col2, col3 = st.columns([1, 1.2, 1])
     
     with col2:
+        # Header
         st.markdown("""
-            <div class="glass-card" style="text-align: center; padding: 3rem; margin-top: 5rem;">
-                <h2 style="color: white; font-family: 'Outfit', sans-serif; margin-bottom: 1rem;">
-                    🌟 Welcome to Emotion Companion
-                </h2>
-                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem;">
-                    Your AI-powered emotional wellness companion
-                </p>
+            <div class="auth-header">
+                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🌟</div>
+                <h1 class="auth-title">Welcome to Emotion Companion</h1>
+                <p class="auth-subtitle">Your AI-powered emotional wellness companion</p>
             </div>
         """, unsafe_allow_html=True)
         
-        st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
         
         # Auth mode selector
         auth_mode = st.radio(
-            "Choose an option",
+            "auth_mode",
             ["Login", "Sign Up"],
             horizontal=True,
-            label_visibility="collapsed"
+            label_visibility="collapsed",
+            key="auth_mode_selector"
         )
         
-        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
         
         # Auth form
-        email = st.text_input("📧 Email", placeholder="your@email.com")
-        password = st.text_input("🔒 Password", type="password", placeholder="Enter your password")
+        email = st.text_input(
+            "📧 Email Address",
+            placeholder="your@email.com",
+            key="auth_email"
+        )
         
-        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+        password = st.text_input(
+            "🔒 Password",
+            type="password",
+            placeholder="Enter your password",
+            key="auth_password"
+        )
+        
+        st.markdown("<div class='auth-btn'></div>", unsafe_allow_html=True)
         
         if auth_mode == "Login":
-            if st.button("🚀 Log In", type="primary", use_container_width=True):
+            if st.button("🚀 Log In", type="primary", use_container_width=True, key="login_btn"):
                 if not email or not password:
-                    st.error("Please enter both email and password")
+                    st.error("⚠️ Please enter both email and password")
                 else:
                     try:
-                        with st.spinner("Logging in..."):
+                        with st.spinner("🔐 Authenticating..."):
                             response = supabase.auth.sign_in_with_password({"email": email, "password": password})
                             if response and response.user:
                                 st.session_state.auth_token = response.session.access_token
@@ -320,21 +427,35 @@ if not st.session_state.auth_token:
                                 st.rerun()
                     except Exception as e:
                         st.error(f"❌ Login failed: {str(e)}")
+            
+            st.markdown("<div style='text-align: center; margin-top: 1.5rem;'><p style='color: rgba(255,255,255,0.6); font-size: 0.9rem;'>Don't have an account? Switch to Sign Up above</p></div>", unsafe_allow_html=True)
+            
         else:  # Sign Up
-            if st.button("✨ Create Account", type="primary", use_container_width=True):
+            if st.button("✨ Create Account", type="primary", use_container_width=True, key="signup_btn"):
                 if not email or not password:
-                    st.error("Please enter both email and password")
+                    st.error("⚠️ Please enter both email and password")
                 elif len(password) < 6:
-                    st.error("Password must be at least 6 characters")
+                    st.error("⚠️ Password must be at least 6 characters")
                 else:
                     try:
-                        with st.spinner("Creating account..."):
+                        with st.spinner("🎨 Creating your account..."):
                             response = supabase.auth.sign_up({"email": email, "password": password})
                             if response and response.user:
                                 st.success("✅ Account created! Please log in.")
                                 st.balloons()
                     except Exception as e:
                         st.error(f"❌ Signup failed: {str(e)}")
+            
+            st.markdown("<div style='text-align: center; margin-top: 1.5rem;'><p style='color: rgba(255,255,255,0.6); font-size: 0.9rem;'>Already have an account? Switch to Login above</p></div>", unsafe_allow_html=True)
+    
+    # Footer
+    st.markdown("""
+        <div style='text-align: center; margin-top: 3rem; padding: 2rem;'>
+            <p style='color: rgba(255, 255, 255, 0.4); font-size: 0.85rem;'>
+                Made with ❤️ for mental health awareness
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
     
     # Stop execution here - don't show the main app
     st.stop()
