@@ -1,0 +1,38 @@
+services:
+  # Backend Service (FastAPI)
+  - type: web
+    name: emotion-companion-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.app:app --host 0.0.0.0 --port $PORT
+    plan: free
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: PYTHON_VERSION
+        value: 3.9.13
+
+  # Frontend Service (Streamlit)
+  - type: web
+    name: emotion-companion-ui
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run streamlit_app/app.py --server.port $PORT --server.address 0.0.0.0
+    plan: free
+    envVars:
+      - key: API_BASE_URL
+        value: http://emotion-companion-api:10000/api # Internal URL (Render Private Network)
+      - key: AUTH_URL
+        value: https://emotion-companion.netlify.app
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: PYTHON_VERSION
+        value: 3.9.13

@@ -22,7 +22,8 @@ from wellness_integration import render_wellness_toolkit
 # Configuration
 # ============================================================================
 
-API_BASE_URL = "http://localhost:8000/api"
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000/api")
+AUTH_URL = os.getenv("AUTH_URL", "http://localhost:8000/auth")
 
 st.set_page_config(
     page_title="Emotion Companion",
@@ -270,17 +271,18 @@ if "show_results" not in st.session_state:
 # ============================================================================
 
 # Check if user is authenticated via HTML auth page
-st.markdown("""
+# Check if user is authenticated via HTML auth page
+st.markdown(f"""
     <script>
     // Check for auth token from HTML auth page
     const authToken = sessionStorage.getItem('auth_token');
     const userEmail = sessionStorage.getItem('user_email');
     const userId = sessionStorage.getItem('user_id');
     
-    if (!authToken) {
+    if (!authToken) {{
         // No token found, redirect to HTML auth page
-        window.location.href = 'http://localhost:8000/auth';
-    }
+        window.location.href = '{AUTH_URL}';
+    }}
     </script>
 """, unsafe_allow_html=True)
 
@@ -350,10 +352,10 @@ with st.sidebar:
             pass
         
         # Clear sessionStorage and redirect to auth page
-        st.markdown("""
+        st.markdown(f"""
             <script>
             sessionStorage.clear();
-            window.location.href = 'http://localhost:8000/auth';
+            window.location.href = '{AUTH_URL}';
             </script>
         """, unsafe_allow_html=True)
         st.rerun()
