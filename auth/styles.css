@@ -20,7 +20,7 @@ body {
    ============================================ */
 .left-panel {
     flex: 1;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF6500 0%, #FFD500 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,9 +131,9 @@ body {
 }
 
 .tab.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF6500 0%, #FFD500 100%);
     color: white;
-    border-color: #667eea;
+    border-color: #FF6500;
 }
 
 /* Form Container */
@@ -201,8 +201,8 @@ body {
 .input-group input:focus {
     outline: none;
     background: white;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #FF6500;
+    box-shadow: 0 0 0 3px rgba(255, 101, 0, 0.1);
 }
 
 .input-group input::placeholder {
@@ -213,7 +213,7 @@ body {
 .btn-primary {
     width: 100%;
     padding: 0.9rem 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF6500 0%, #FFD500 100%);
     color: white;
     border: none;
     border-radius: 10px;
@@ -221,14 +221,14 @@ body {
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 101, 0, 0.3);
     margin-top: 1rem;
     font-family: 'Outfit', sans-serif;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 20px rgba(255, 101, 0, 0.4);
 }
 
 .btn-primary:active {
@@ -248,7 +248,7 @@ body {
 }
 
 .helper-text a {
-    color: #667eea;
+    color: #FF6500;
     text-decoration: none;
     font-weight: 600;
     cursor: pointer;
