@@ -472,7 +472,7 @@ if not st.session_state.auth_token:
     """, unsafe_allow_html=True)
     
     # Create two-column layout
-    left_col, right_col = st.columns([1, 1], gap="none")
+    left_col, right_col = st.columns([1, 1], gap="small")
     
     with left_col:
         st.markdown("""
