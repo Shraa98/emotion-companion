@@ -266,51 +266,97 @@ if "show_results" not in st.session_state:
     st.session_state.show_results = False
 
 # ============================================================================
-# Authentication Sidebar
+# Authentication Gate (Main Page)
+# ============================================================================
+
+# If user is not authenticated, show login/signup page
+if not st.session_state.auth_token:
+    # Center the auth form
+    col1, col2, col3 = st.columns([1, 2, 1])
+    
+    with col2:
+        st.markdown("""
+            <div class="glass-card" style="text-align: center; padding: 3rem; margin-top: 5rem;">
+                <h2 style="color: white; font-family: 'Outfit', sans-serif; margin-bottom: 1rem;">
+                    🌟 Welcome to Emotion Companion
+                </h2>
+                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem;">
+                    Your AI-powered emotional wellness companion
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
+        
+        # Auth mode selector
+        auth_mode = st.radio(
+            "Choose an option",
+            ["Login", "Sign Up"],
+            horizontal=True,
+            label_visibility="collapsed"
+        )
+        
+        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+        
+        # Auth form
+        email = st.text_input("📧 Email", placeholder="your@email.com")
+        password = st.text_input("🔒 Password", type="password", placeholder="Enter your password")
+        
+        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+        
+        if auth_mode == "Login":
+            if st.button("🚀 Log In", type="primary", use_container_width=True):
+                if not email or not password:
+                    st.error("Please enter both email and password")
+                else:
+                    try:
+                        with st.spinner("Logging in..."):
+                            response = supabase.auth.sign_in_with_password({"email": email, "password": password})
+                            if response and response.user:
+                                st.session_state.auth_token = response.session.access_token
+                                st.session_state.user_email = response.user.email
+                                st.session_state.user_id = response.user.id
+                                st.success("✅ Welcome back!")
+                                st.rerun()
+                    except Exception as e:
+                        st.error(f"❌ Login failed: {str(e)}")
+        else:  # Sign Up
+            if st.button("✨ Create Account", type="primary", use_container_width=True):
+                if not email or not password:
+                    st.error("Please enter both email and password")
+                elif len(password) < 6:
+                    st.error("Password must be at least 6 characters")
+                else:
+                    try:
+                        with st.spinner("Creating account..."):
+                            response = supabase.auth.sign_up({"email": email, "password": password})
+                            if response and response.user:
+                                st.success("✅ Account created! Please log in.")
+                                st.balloons()
+                    except Exception as e:
+                        st.error(f"❌ Signup failed: {str(e)}")
+    
+    # Stop execution here - don't show the main app
+    st.stop()
+
+# ============================================================================
+# Authenticated User - Show Logout in Sidebar
 # ============================================================================
 
 with st.sidebar:
     st.markdown("### 👤 Account")
-    
-    if st.session_state.auth_token:
-        st.success(f"Logged in as: {st.session_state.user_email}")
-        if st.button("Log Out"):
-            st.session_state.user_id = str(uuid4()) # Reset to anonymous
-            st.session_state.user_email = None
-            st.session_state.auth_token = None
-            try:
-                supabase.auth.sign_out()
-            except:
-                pass
-            st.rerun()
-    else:
-        auth_mode = st.radio("Access", ["Login", "Sign Up"], horizontal=True, label_visibility="collapsed")
-        
-        email = st.text_input("Email")
-        password = st.text_input("Password", type="password")
-        
-        if auth_mode == "Login":
-            if st.button("Log In", type="primary", use_container_width=True):
-                try:
-                    response = supabase.auth.sign_in_with_password({"email": email, "password": password})
-                    if response and response.user:
-                        st.session_state.auth_token = response.session.access_token
-                        st.session_state.user_email = response.user.email
-                        st.session_state.user_id = response.user.id
-                        st.success("Welcome back!")
-                        st.rerun()
-                except Exception as e:
-                    st.error(f"Login failed: {e}")
-                    
-        else: # Sign Up
-            if st.button("Create Account", type="primary", use_container_width=True):
-                try:
-                    response = supabase.auth.sign_up({"email": email, "password": password})
-                    if response and response.user:
-                        st.success("Account created! Please log in.")
-                except Exception as e:
-                    st.error(f"Signup failed: {e}")
-    
+    st.success(f"Logged in as:\n{st.session_state.user_email}")
+    if st.button("🚪 Log Out", use_container_width=True):
+        st.session_state.user_id = str(uuid4())
+        st.session_state.user_email = None
+        st.session_state.auth_token = None
+        st.session_state.analysis_result = None
+        st.session_state.show_results = False
+        try:
+            supabase.auth.sign_out()
+        except:
+            pass
+        st.rerun()
     st.markdown("---")
 
 # ============================================================================

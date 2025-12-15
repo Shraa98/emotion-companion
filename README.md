@@ -53,29 +53,35 @@
 
 ```mermaid
 graph TD
-    A[User Opens App] --> B[Emotion Companion Home]
-    B -->|Expand Sidebar| C[Login/Signup Form]
-    B --> D[Write Journal Entry]
-    D -->|Text or Voice| E[Submit for Analysis]
+    A[User Opens App] --> B{Authentication Gate}
+    B -->|New User| C[Sign Up Form]
+    B -->|Existing User| D[Login Form]
+    
+    C --> E[Create Account]
+    D --> F[Verify Credentials]
+    
+    E & F --> G[Authenticated Session]
+    G --> H[Emotion Companion Home]
+    
+    H --> I[Write Journal Entry]
+    I -->|Text or Voice| J[Submit for Analysis]
     
     subgraph "AI Analysis Pipeline"
-    E --> F{NLP Engine}
-    F --> G[Sentiment Analysis]
-    F --> H[Emotion Detection]
-    F --> I[Theme Extraction]
-    G & H & I --> J[Aggregate Insights]
+    J --> K{NLP Engine}
+    K --> L[Sentiment Analysis]
+    K --> M[Emotion Detection]
+    K --> N[Theme Extraction]
+    L & M & N --> O[Aggregate Insights]
     end
     
-    J -->|JSON Response| K[Display Results]
-    K --> L[Mood Score & Emotion]
-    K --> M[Personalized Suggestions]
-    K --> N[Wellness Toolkit]
+    O -->|JSON Response| P[Display Results]
+    P --> Q[Mood Score & Emotion]
+    P --> R[Personalized Suggestions]
+    P --> S[Wellness Toolkit]
     
-    C -->|Authenticated| O[Saved to Database]
-    K -.->|If Logged In| O
+    P --> T[Save to Database]
+    T --> U[User History]
 ```
-
-> **Note**: Authentication is available in the left sidebar. Click the `>` arrow in the top-left to expand it and access Login/Signup options.
 
 ---
 
