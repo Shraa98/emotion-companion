@@ -54,7 +54,7 @@
 ```mermaid
 graph TD
     A[User Opens App] --> B[Emotion Companion Home]
-    B -->|Optional| C[Sidebar: Login/Signup]
+    B -->|Expand Sidebar| C[Login/Signup Form]
     B --> D[Write Journal Entry]
     D -->|Text or Voice| E[Submit for Analysis]
     
@@ -71,9 +71,11 @@ graph TD
     K --> M[Personalized Suggestions]
     K --> N[Wellness Toolkit]
     
-    C -->|Authenticated| O[Save to User History]
-    K --> O
+    C -->|Authenticated| O[Saved to Database]
+    K -.->|If Logged In| O
 ```
+
+> **Note**: Authentication is available in the left sidebar. Click the `>` arrow in the top-left to expand it and access Login/Signup options.
 
 ---
 
