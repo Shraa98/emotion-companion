@@ -15,8 +15,12 @@ import os
 # Add project root to path to allow imports from backend
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-# Import wellness integration (sibling import)
-from wellness_integration import render_wellness_toolkit
+# Import wellness integration (same directory import)
+try:
+    from streamlit_app.wellness_integration import render_wellness_toolkit
+except ImportError:
+    # Fallback for local development
+    from wellness_integration import render_wellness_toolkit
 
 # ============================================================================
 # Configuration
@@ -245,10 +249,17 @@ st.markdown("""
 # ============================================================================
 
 # Import Auth
-from backend.supabase_client import get_supabase
+try:
+    from streamlit_app.supabase_auth import get_supabase
+except ImportError:
+    # Fallback for local development
+    try:
+        from supabase_auth import get_supabase
+    except ImportError:
+        # Last resort - use backend client if available
+        from backend.supabase_client import get_supabase
 
 # Initialize Auth Client
-# We use the existing supabase client which already has auth configured
 supabase = get_supabase()
 
 # ============================================================================
