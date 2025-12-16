@@ -267,7 +267,36 @@ if "show_results" not in st.session_state:
     st.session_state.show_results = False
 
 # ============================================================================
-# Check for HTML Auth Token
+# Check for URL Auth Token (Cross-Origin Handover)
+# ============================================================================
+
+# Use st.query_params for Streamlit 1.30+
+query_params = st.query_params
+
+if "token" in query_params:
+    st.session_state.auth_token = query_params["token"]
+    st.session_state.user_email = query_params.get("email")
+    st.session_state.user_id = query_params.get("uid")
+    
+    # Store in cookies via JS so it persists on reload
+    st.markdown(f"""
+        <script>
+        document.cookie = "auth_token={query_params["token"]}; path=/";
+        document.cookie = "user_email={query_params.get("email")}; path=/";
+        document.cookie = "user_id={query_params.get("uid")}; path=/";
+        sessionStorage.setItem('auth_token', '{query_params["token"]}');
+        
+        // Clear query params from URL without reload
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({{}}, document.title, newUrl);
+        </script>
+    """, unsafe_allow_html=True)
+    
+    # Rerun to clear params from Streamlit's internal state
+    # st.rerun()  # Optional, but JS replaceState + session usage usually enough
+
+# ============================================================================
+# Check for HTML Auth Token (Fallback / Legacy)
 # ============================================================================
 
 # Check if user is authenticated via HTML auth page
@@ -324,11 +353,15 @@ if not st.session_state.auth_token:
             st.session_state.auth_token = cookies["auth_token"]
             st.session_state.user_email = cookies.get("user_email")
             st.session_state.user_id = cookies.get("user_id")
-    except:
-        # Fallback: assume authenticated if we got past the JavaScript check
-        st.session_state.auth_token = "authenticated"
-        st.session_state.user_email = "user@example.com"
-        st.session_state.user_id = str(uuid4())
+    except Exception as e:
+        # Fallback: Check if we are in a rerun context where headers are not available
+        pass
+
+# Final Check: If still not authenticated, STOP
+if not st.session_state.auth_token:
+    st.warning("⚠️ You are not logged in. Redirecting to login page...")
+    st.markdown(f"<meta http-equiv='refresh' content='0; url={AUTH_URL}'>", unsafe_allow_html=True)
+    st.stop()
 
 # ============================================================================
 # Authenticated User - Show Logout in Sidebar

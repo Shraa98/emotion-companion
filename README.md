@@ -42,7 +42,7 @@
 
 ### 🔧 Technical Highlights
 
-*   **Dual-Engine NLP**: Uses Transformer models (HuggingFace) for accuracy, with a lightweight fallback for speed.
+*   **Lightweight ML Models**: Uses scikit-learn (Logistic Regression + Naive Bayes) for fast, efficient predictions.
 *   **Scalable Backend**: Built on FastAPI with connection pooling for high concurrency.
 *   **Reactive Frontend**: Streamlit interface optimized for user engagement.
 *   **Cloud Native**: Docker-ready and designed for microservices deployment.
@@ -129,9 +129,9 @@ graph TD
 | :--- | :--- | :--- |
 | **Frontend** | Streamlit | Responsive, interactive UI |
 | **Backend** | FastAPI | High-performance API |
-| **Database** | PostgreSQL | Relational data storage |
+| **Database** | PostgreSQL (Supabase) | Relational data storage |
 | **Auth/Storage** | Supabase | User management & asset hosting |
-| **AI/ML** | HuggingFace / NLTK | Sentiment & Emotion classification |
+| **AI/ML** | scikit-learn / NLTK | Sentiment & Emotion classification |
 | **Visualization** | Plotly | Interactive data charts |
 
 ---
@@ -143,21 +143,63 @@ emotion-companion/
 ├── 📂 backend/              # FastAPI Application
 │   ├── app.py             # API Entry Point
 │   ├── models.py          # Pydantic Schemas
-│   └── nlp.py             # AI Logic Core
+│   ├── nlp.py             # AI Logic Core
+│   ├── ml_service.py      # ML Model Loading & Prediction
+│   ├── train_models.py    # Model Training Script
+│   ├── data/              # Training Data
+│   │   └── training_data.py
+│   └── models/            # Trained Models (*.joblib)
 │
 ├── 📂 streamlit_app/        # Frontend Application
 │   ├── app.py             # UI Entry Point
-│   ├── app_premium.py     # Advanced UI Components
-│   └── wellness_integration.py # Interactive Tools
+│   ├── components/        # Reusable UI Components
+│   ├── wellness_integration.py # Interactive Wellness Tools
+│   └── styles/            # Custom CSS
 │
+├── 📂 auth/                 # Authentication Pages
+│   ├── index.html         # Standalone Auth UI
+│   ├── auth.js            # Supabase Auth Logic
+│   └── styles.css         # Glassmorphism Design
+│
+├── 📂 migrations/           # Database Schema
 ├── 📂 deploy/               # Deployment Guides
 ├── requirements.txt         # Dependencies
+├── render.yaml             # Render Deployment Config
 └── run_app.bat             # One-click startup script
 ```
 
 ---
 
+## 🤖 ML Models & Training
+
+### Model Architecture
+
+This project uses **lightweight, production-ready ML models** for fast inference:
+
+| Model | Algorithm | Purpose | Size |
+| :--- | :--- | :--- | :--- |
+| **Sentiment Analyzer** | Logistic Regression | Classify text as POSITIVE/NEGATIVE | ~5KB |
+| **Emotion Detector** | Naive Bayes | Detect emotions (joy, sadness, anger, etc.) | ~18KB |
+
+### Training Workflow
+
+1. **Prepare Training Data**: Curated dataset in `backend/data/training_data.py`
+2. **Train Models**: Run `python backend/train_models.py`
+3. **Models Saved**: Automatically saved to `backend/models/` as `.joblib` files
+4. **Auto-Load**: Models loaded on backend startup via `ml_service.py`
+
+### Why scikit-learn?
+
+✅ **Fast**: Predictions in milliseconds  
+✅ **Lightweight**: Total model size < 25KB  
+✅ **No GPU Required**: Runs on free-tier hosting  
+✅ **Production-Ready**: Battle-tested, stable algorithms  
+✅ **Easy to Retrain**: Simple training pipeline with custom data
+
+---
+
 ## 🤝 Contributing
+
 
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
 

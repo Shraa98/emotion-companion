@@ -5,92 +5,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emotion Companion - Login</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/auth/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
-        <!-- Left Panel - Branding -->
-        <div class="left-panel">
-            <div class="brand-content">
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+
+    <div class="main-container">
+        <div class="glass-card">
+            <!-- Branding Header -->
+            <div class="auth-header">
                 <div class="logo">🌟</div>
-                <h1 class="brand-title">Emotion<br>Companion</h1>
-                <p class="brand-tagline">Start your journey to<br>emotional wellness</p>
+                <h1>Emotion Companion</h1>
+                <p>Your journey to emotional wellness</p>
             </div>
-        </div>
 
-        <!-- Right Panel - Auth Form -->
-        <div class="right-panel">
-            <div class="auth-card">
-                <!-- Tab Switcher -->
-                <div class="tab-switcher">
-                    <button class="tab active" data-tab="login">Login</button>
-                    <button class="tab" data-tab="signup">Sign Up</button>
+            <!-- Tab Switcher -->
+            <div class="tab-switcher">
+                <button class="tab active" data-tab="login">Login</button>
+                <button class="tab" data-tab="signup">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="form-wrapper active">
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="login-email" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        Log In
+                    </button>
+
+                    <div id="login-error" class="error-message"></div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>New here? <a href="#" class="switch-tab" data-target="signup">Create an account</a></p>
                 </div>
+            </div>
 
-                <!-- Login Form -->
-                <div id="login-form" class="form-container active">
-                    <h2 class="form-title">Welcome Back!</h2>
-                    <p class="form-subtitle">Login to your account</p>
+            <!-- Signup Form -->
+            <div id="signup-form" class="form-wrapper">
+                <form id="signupForm">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="signup-email" placeholder="name@example.com" required>
+                    </div>
 
-                    <form id="loginForm">
-                        <div class="input-group">
-                            <label for="login-email">Email</label>
-                            <input type="email" id="login-email" placeholder="your@email.com" required>
-                        </div>
+                    <div class="input-group">
+                        <label>Create Password</label>
+                        <input type="password" id="signup-password" placeholder="At least 6 characters" minlength="6" required>
+                    </div>
 
-                        <div class="input-group">
-                            <label for="login-password">Password</label>
-                            <input type="password" id="login-password" placeholder="Enter your password" required>
-                        </div>
+                    <button type="submit" class="btn-primary">
+                        Sign Up
+                    </button>
 
-                        <button type="submit" class="btn-primary">
-                            <span class="btn-icon">🚀</span> Log In
-                        </button>
+                    <div id="signup-error" class="error-message"></div>
+                    <div id="signup-success" class="success-message"></div>
+                </form>
 
-                        <div id="login-error" class="error-message"></div>
-                    </form>
-
-                    <p class="helper-text">Don't have an account? <a href="#" class="switch-tab"
-                            data-target="signup">Sign Up</a></p>
-                </div>
-
-                <!-- Signup Form -->
-                <div id="signup-form" class="form-container">
-                    <h2 class="form-title">Create Account</h2>
-                    <p class="form-subtitle">Start your wellness journey</p>
-
-                    <form id="signupForm">
-                        <div class="input-group">
-                            <label for="signup-email">Email</label>
-                            <input type="email" id="signup-email" placeholder="your@email.com" required>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="signup-password">Password</label>
-                            <input type="password" id="signup-password" placeholder="At least 6 characters" required
-                                minlength="6">
-                        </div>
-
-                        <button type="submit" class="btn-primary">
-                            <span class="btn-icon">✨</span> Create Account
-                        </button>
-
-                        <div id="signup-error" class="error-message"></div>
-                        <div id="signup-success" class="success-message"></div>
-                    </form>
-
-                    <p class="helper-text">Already have an account? <a href="#" class="switch-tab"
-                            data-target="login">Log In</a></p>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" class="switch-tab" data-target="login">Log In</a></p>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js"></script>
-    <script src="auth.js"></script>
+    <script src="/auth/config.js"></script>
+    <script src="/auth/auth.js"></script>
 </body>
 
 </html>

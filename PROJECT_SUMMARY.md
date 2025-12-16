@@ -198,14 +198,15 @@ See `deploy/render.md` for detailed deployment instructions.
 
 ## 📊 NLP Models
 
-### Primary (HuggingFace)
-- **Sentiment**: distilbert-base-uncased-finetuned-sst-2-english
-- **Emotion**: j-hartmann/emotion-english-distilroberta-base
-- **Size**: ~250MB each
-- **Device**: CPU-compatible
+### Current Implementation (scikit-learn)
+- **Sentiment**: Logistic Regression with TF-IDF vectorization
+- **Emotion**: Naive Bayes with TF-IDF vectorization
+- **Size**: ~23KB total (both models combined)
+- **Training**: Custom training data in `backend/data/training_data.py`
+- **Inference**: Fast predictions via `ml_service.py`
 
-### Fallback (Lightweight)
-- **Sentiment**: VADER (NLTK)
+### Fallback (NLTK)
+- **Sentiment**: VADER (rule-based)
 - **Emotion**: Keyword matching
 - **Size**: <1MB
 - **Speed**: Very fast

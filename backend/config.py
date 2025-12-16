@@ -31,9 +31,8 @@ class Settings(BaseSettings):
     secret_key: str = Field(default="dev-secret-key-change-in-production", env="SECRET_KEY")
     environment: str = Field(default="development", env="ENVIRONMENT")
     
-    # NLP Model Configuration
-    use_hf_models: bool = Field(default=True, env="USE_HF_MODELS")
-    hf_cache_dir: str = Field(default="./model_cache", env="HF_CACHE_DIR")
+    # NLP Model Configuration (Deep Learning & Transformers removed)
+    # We now use classic ML models loaded from disk
     
     # Audio Configuration
     enable_audio: bool = Field(default=False, env="ENABLE_AUDIO")

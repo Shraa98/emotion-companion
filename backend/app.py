@@ -94,11 +94,11 @@ async def health_check():
     """
     # Check which NLP models are available
     from backend import nlp
+    from backend.ml_service import _sentiment_model, _emotion_model
     
     models_available = {
-        "sentiment_hf": nlp.sentiment_pipeline is not None,
-        "emotion_hf": nlp.emotion_pipeline is not None,
-        "vader": nlp.vader_analyzer is not None,
+        "sentiment_model": _sentiment_model is not None,
+        "emotion_model": _emotion_model is not None,
         "spacy": nlp.nlp_spacy is not None
     }
     
@@ -297,7 +297,7 @@ async def startup_event():
     """Run on application startup."""
     logger.info("Starting Emotion Companion API")
     logger.info(f"Environment: {settings.environment}")
-    logger.info(f"Using HF models: {settings.use_hf_models}")
+    logger.info(f"Using Classic ML models")
     logger.info(f"Audio enabled: {settings.enable_audio}")
 
 

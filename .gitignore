@@ -26,6 +26,7 @@ model_cache/
 *.pt
 *.bin
 *.onnx
+*.joblib
 
 # Database
 *.db
@@ -72,3 +73,4 @@ tmp/
 
 # Analysis results
 analysis_results.csv
+test_*_output.txt
