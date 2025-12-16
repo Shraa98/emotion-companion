@@ -60,6 +60,149 @@ app.mount("/auth/static", StaticFiles(directory=str(auth_dir)), name="auth_stati
 
 
 # ============================================================================
+# Root Endpoint
+# ============================================================================
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    """
+    Root endpoint - API welcome page.
+    """
+    return """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Emotion Companion API</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+            .container {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 20px;
+                padding: 40px;
+                max-width: 600px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            }
+            h1 {
+                color: #667eea;
+                margin-bottom: 10px;
+                font-size: 2.5em;
+            }
+            .subtitle {
+                color: #666;
+                margin-bottom: 30px;
+                font-size: 1.1em;
+            }
+            .status {
+                display: inline-block;
+                background: #10b981;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-weight: 600;
+                margin-bottom: 30px;
+            }
+            .endpoints {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px 0;
+            }
+            .endpoints h2 {
+                color: #333;
+                margin-bottom: 15px;
+                font-size: 1.3em;
+            }
+            .endpoint {
+                background: white;
+                padding: 12px 16px;
+                margin: 10px 0;
+                border-radius: 8px;
+                border-left: 4px solid #667eea;
+                transition: transform 0.2s;
+            }
+            .endpoint:hover {
+                transform: translateX(5px);
+            }
+            .endpoint a {
+                color: #667eea;
+                text-decoration: none;
+                font-weight: 500;
+            }
+            .endpoint a:hover {
+                text-decoration: underline;
+            }
+            .endpoint-desc {
+                color: #666;
+                font-size: 0.9em;
+                margin-top: 4px;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 30px;
+                color: #666;
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🧠 Emotion Companion API</h1>
+            <p class="subtitle">AI-powered journal and mood reflection platform</p>
+            <span class="status">✓ API Running</span>
+            
+            <div class="endpoints">
+                <h2>📚 API Documentation</h2>
+                <div class="endpoint">
+                    <a href="/api/docs" target="_blank">/api/docs</a>
+                    <div class="endpoint-desc">Interactive API documentation (Swagger UI)</div>
+                </div>
+                <div class="endpoint">
+                    <a href="/api/redoc" target="_blank">/api/redoc</a>
+                    <div class="endpoint-desc">Alternative API documentation (ReDoc)</div>
+                </div>
+            </div>
+
+            <div class="endpoints">
+                <h2>🔍 Health Checks</h2>
+                <div class="endpoint">
+                    <a href="/healthz" target="_blank">/healthz</a>
+                    <div class="endpoint-desc">Simple health check</div>
+                </div>
+                <div class="endpoint">
+                    <a href="/api/health" target="_blank">/api/health</a>
+                    <div class="endpoint-desc">Detailed system status</div>
+                </div>
+            </div>
+
+            <div class="endpoints">
+                <h2>🔐 Authentication</h2>
+                <div class="endpoint">
+                    <a href="/auth" target="_blank">/auth</a>
+                    <div class="endpoint-desc">User authentication page</div>
+                </div>
+            </div>
+
+            <div class="footer">
+                Version 1.0.0 • Powered by FastAPI
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
+
+# ============================================================================
 # Authentication Page Route
 # ============================================================================
 
