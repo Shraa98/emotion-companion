@@ -86,6 +86,12 @@ async def serve_auth_files(filename: str):
 # Health Check Endpoint
 # ============================================================================
 
+@app.get("/healthz")
+def health():
+    """Simple health check endpoint for monitoring services."""
+    return {"status": "ok"}
+
+
 @app.get("/api/health", response_model=HealthResponse)
 async def health_check():
     """
